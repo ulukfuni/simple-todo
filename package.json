@@ -1,7 +1,7 @@
 {
   "name": "simple-todo",
   "engines": {
-    "node": ">=9"
+    "node": ">=10"
   },
   "scripts": {
     "start": "babel-node ./server/index.js"

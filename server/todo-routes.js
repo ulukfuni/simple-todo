@@ -7,6 +7,6 @@ todoExpress.post('/todo', (req, res) => TodoData.create(req.body).then(todo => r
 todoExpress.delete('/todo/:id', (req, res) => TodoData.delete(req.params.id).then(() => res.sendStatus(200)).catch((err) => res.status(500).json(err)));
 
 // TODO: Implement
-todoExpress.put('/todo/:id', (req, res) => res.status(500).json('Not Implemented'));
+todoExpress.put('/todo/:id', (req, res) => res.sendStatus(501));
 
 export default todoExpress;
