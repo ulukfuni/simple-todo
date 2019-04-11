@@ -9,7 +9,7 @@ The following technologies are currently used and will likely need to be underst
 ## Your challenge
 Your challenge, if you so choose to accept, shall be to implement the User Story below.
 
-The estimated time to complete the exercise is between 2 and 4 hours.
+The estimated time to complete the exercise is between 2 and 4 hours, ***please do not spend more than 8 hours on this exercise***.
 
 ### User Story
 ```
