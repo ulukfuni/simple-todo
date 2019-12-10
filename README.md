@@ -58,6 +58,7 @@ Some extras you may consider adding:
 - Component library (Material, Bootstrap, etc)
 - Type checking (TypeScript, Flow, etc)
 - Styling
+- Authentication/Authorization
 - State management framework (Redux, Relay, etc)
 - Use more Babel features
 - Style checking (JSHint, ESLint, Prettier, etc)
