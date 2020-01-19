@@ -1,20 +1,28 @@
 import React from 'react';
 import FetchApi from '../fetch-api';
+import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+import ToDo from './ToDo'
+import Completed from './Completed'
 
 const ENTER_KEY_CODE = 13;
 
 export default class TodoApp extends React.Component {
 	state = { todos: [], newText: '' };
 
-	constructor(props) {
-		super(props);
+	componentDidMount() {
 		this.getTodos();
 	}
 
 	getTodos = () => {
 		return FetchApi
 			.get('/todo')
-			.then(todos => this.setState({ todos }))
+			.then(todos => {
+				this.setState({ todos })
+			})
 			.catch(() => alert('There was an error getting todos'));
 	};
 
@@ -26,20 +34,27 @@ export default class TodoApp extends React.Component {
 				newTodos.push(newTodo);
 				this.setState({ todos: newTodos, newText: '' });
 			})
-			.catch(() => alert('There was an error creating the todo'));
+			.catch((err) => alert(`There was an error creating the todo ${err}`));
 	};
 
 	handleDeleteRequest = (id) => {
 		FetchApi
 			.delete(`/todo/${id}`)
 			.then(() => {
-				const newTodos = Array.from(this.state.todos);
-				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-				newTodos.splice(todoIndex, 1);
-				this.setState({ todos: newTodos });
+				this.getTodos()
 			})
 			.catch(() => alert('Error removing todo'));
 	};
+
+	markComplete = (id) => {
+		FetchApi
+			.put(`/todo/${id}`)
+			.then(() => {
+				this.getTodos()
+			})
+			.catch(() => alert('Error updating todo'))
+	}
+
 
 	handleChange = e => {
 		this.setState({ newText: e.target.value });
@@ -51,27 +66,47 @@ export default class TodoApp extends React.Component {
 	};
 
 	render() {
+		const { todos, newText } = this.state
+		const pending = todos.filter(todo => !todo.completed)
+		const completed = todos.filter(todo => todo.completed)
 		return (
-			<div>
-				<h1>todos</h1>
-				<input
-					autoFocus
-					onChange={this.handleChange}
-					onKeyDown={this.handleKeyDown}
-					placeholder="What needs to be done?"
-					value={this.state.newText}
-				/>
-				<ul>
-					{this.state.todos.map(todo => (
-						<li key={todo.id}>
-							<div className="view">
-								<label>{todo.text}</label>
-								<button onClick={() => this.handleDeleteRequest(todo.id)}>Remove Todo</button>
-							</div>
-						</li>
-					))}
-				</ul>
-			</div>
+			<Box display="flex">
+				<Box style={{ width: '45%'}}>
+					<Typography variant="h2">To Dos</Typography>
+					<Typography>{pending.length} Left</Typography>
+					<TextField
+						id="standard-basic"
+						label="New ToDo"
+						onChange={this.handleChange}
+						onKeyDown={this.handleKeyDown}
+						placeholder="What needs to be done?"
+						value={newText}
+					/>
+					<List>
+						{pending.map(todo => (
+							<ToDo 
+								key={todo.id}
+								todo={todo}
+								handleDeleteRequest={this.handleDeleteRequest}
+								markComplete={this.markComplete}
+							/>
+						))}
+					</List>
+				</Box>
+				<Box style={{ width: '45%'}}>
+					<Typography variant="h2">Completed</Typography>
+					<Typography>{completed.length} Finished!</Typography>
+					<List>
+						{completed.map(todo => (
+							<Completed
+								key={todo.id}
+								todo={todo}
+								handleDeleteRequest={this.handleDeleteRequest}
+							/>
+						))}
+					</List>
+				</Box>
+			</Box>
 		);
 	}
 }

@@ -22,7 +22,9 @@ export default class FetchApi {
 	}
 
 	static put(path) {
-		// TODO: Implement
-		throw new Error('Not Implemented');
+		return fetch(path, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+		});
 	}
 }
