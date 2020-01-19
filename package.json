@@ -1,10 +1,11 @@
 {
   "name": "simple-todo",
   "engines": {
-    "node": ">=12"
+    "node": ">=10"
   },
   "scripts": {
-    "start": "babel-node ./server/index.js"
+    "start": "babel-node ./server/index.js",
+    "lint": "eslint . --ext .js --fix"
   },
   "dependencies": {
     "@babel/core": "^7.7.5",
@@ -13,6 +14,8 @@
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
     "@babel/runtime": "^7.7.6",
+    "@material-ui/core": "^4.8.3",
+    "@material-ui/icons": "^4.5.1",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
@@ -25,6 +28,13 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.0.0"
+    "@babel/node": "^7.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.18.0",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
